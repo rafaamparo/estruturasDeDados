@@ -82,10 +82,18 @@ int ehNaoOrientado(TGrafo *g) {
   while (aux != NULL) {
     TVizinho *auxVizinho = aux->prim_vizinho;
     while (auxVizinho != NULL){
-      
+      TGrafo* aux2 = busca_vertice(g, auxVizinho->id_vizinho);
+      TVizinho* aux2Vizinho = aux2->prim_vizinho;
+      if(aux2 != NULL){
+        if(busca_vizinho(aux2Vizinho, aux->id_vertice) == NULL)
+          orientacao = 0;
+        else if (busca_vizinho(aux2Vizinho, aux->id_vertice) != NULL && busca_vizinho(aux2Vizinho, aux->id_vertice)->peso != auxVizinho->peso)
+          orientacao = 0;
+      }
+      auxVizinho = auxVizinho->prox;
     }
+    aux = aux->prox;
   }
-
   return orientacao;
 }
 
